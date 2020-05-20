@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "array",
+    "items": [
+      {
+        "type": "boolean"
+      },
+      {
+        "type": "object",
+        "properties": {
+            "key1": {
+                "type": "string"
+            },
+            "key2": {
+                "type": "string"
+            }
+        }
+      },
+      {
+        "type": "number",
+        "minimum" : -42
+      },
+      {
+        "type": "object",
+        "anyOf": [
+          { "$ref": "./array2.schema.json#" }
+        ]
+      }
+    ],
+    "additionalItems": false
+  }
