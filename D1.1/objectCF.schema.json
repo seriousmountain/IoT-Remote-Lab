@@ -1,0 +1,22 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "unit": {
+        "type": "string",
+        "enum": ["Celsius", "Fahrenheit"]
+      },
+      "value": {
+        "type": "number"
+      }
+    },
+    "if": {
+        "properties": { "unit": { "const": "Celsius" } }
+      },
+      "then": {
+        "properties": { "value": { "maximum" : 150, "minimum" : 50 } }
+      },
+      "else": {
+        "properties": { "value": { "maximum" : 302, "minimum" : 122 } }
+      }
+}
