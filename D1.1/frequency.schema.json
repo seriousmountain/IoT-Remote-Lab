@@ -1,0 +1,16 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "array",
+    "contains": {
+        "type": "integer"
+      },
+    "maxItems" : 58,
+    "minItems" : 58,
+    "items": {
+            "type": "integer",
+            "not": {
+                "minimum": 24000,
+                "maximum": 26000
+            }
+    }
+}
