@@ -1,0 +1,69 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "cylindrical": {
+            "type": "object",
+            "required": ["r", "theta", "z"],
+            "properties": {
+                "r": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 360
+                },
+                "theta": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 360
+                },
+                "z": {
+                    "type": "number"
+                }
+            } 
+        },
+        "spherical": {
+            "type": "object",
+            "required": ["r", "theta", "phi"],
+            "properties": {
+                "r": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 360
+                },
+                "theta": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 360
+                },
+                "phi": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 180
+                }
+            } 
+        }
+    },
+    "type": "array",
+    "items": [
+        {
+        "type": "number"
+        },
+        {
+        "type": "number"
+        },
+        {
+        "type": "number"
+        },
+        {
+            "anyOf": [
+                { "$ref": "#/definitions/cylindrical" },
+                { "$ref": "#/definitions/spherical" }
+            ]
+        },
+        {
+            "anyOf": [
+                { "$ref": "#/definitions/cylindrical" },
+                { "$ref": "#/definitions/spherical" }
+            ]
+        }
+    ]
+}
