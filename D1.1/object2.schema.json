@@ -1,0 +1,27 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "email": {
+        "type": "string",
+        "format": "email"
+      },
+      "lastKnownLocation": {
+        "type": "object",
+        "properties": {
+            "x": {
+                "type": "number"
+            },
+            "y": {
+                "type": "number"
+            }
+        }
+      },
+      "nickname": {
+        "type": "string"
+      }
+    }
+}
