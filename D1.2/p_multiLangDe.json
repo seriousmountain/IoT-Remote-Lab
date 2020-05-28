@@ -1,0 +1,15 @@
+{
+    "@context": [
+        "https://www.w3.org/2019/wot/td/v1",
+        { "@language" : "de" }
+    ],
+    "title": "Roboter",
+    "titles": {
+        "en":"Robot",
+        "de": "Roboter"
+    },
+    "descriptions": {
+        "en":"A robot on a moving platform",
+        "de": "Ein Roboter auf einer mobile Plattform"
+    }
+}
