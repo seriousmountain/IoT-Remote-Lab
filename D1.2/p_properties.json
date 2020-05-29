@@ -1,0 +1,19 @@
+{
+    "properties": {
+        "targetSpeed": {
+            "type": "number",
+            "writeOnly" : true,
+            "minimum": 0,
+            "maximum": 120,
+            "unit": "km/h"
+            
+        },
+        "currentSpeed": {
+            "type": "number",
+            "readOnly" : true,
+            "minimum": 0,
+            "maximum": 120,
+            "unit": "km/h"
+        }
+    }
+}
