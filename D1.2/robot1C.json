@@ -1,0 +1,187 @@
+{
+    "@context": [
+        "https://www.w3.org/2019/wot/td/v1",
+        {
+            "cov": "coaps://192.168.0.101:5683/robot1"
+        }], 
+    "title": "Robot1",
+    "description" : "Robot with an endeffector to grab objects",
+    "base": "http://example.org/robot1",
+    "properties": {
+        "location": {
+            "type": "object",
+            "properties":{
+                "x": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 180
+                },
+                "y": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 90
+                },
+                "z": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 20
+                }
+            },
+            "required": ["x","y","z"],
+            "forms": [{
+                "href": "http://example.org/robot1/location",
+                "subprotocol": "longpoll",
+                "op": "readproperty",
+                "contentType": "application/json"
+            }]
+        },   
+        "state": {
+            "type": "string",
+            "readOnly": true,
+            "writeOnly": true,
+            "enum": ["enabled", "disabled"],
+            "forms": [{
+                "href": "http://example.org/robot1/state"
+            }]
+        },
+        "updateFrequency":{
+            "type": "number",
+            "readOnly": true,
+            "writeOnly": true,
+            "unit": "Hertz",
+            "enum":[1,10,100],
+            "forms": [{
+                "href": "http://example.org/robot1/updateFrequency"
+            }]
+        }
+    },
+    "actions": {
+        "goHome": {
+            "forms": [{
+                "href": "http://example.org/robot1/goHome",
+                "contentType": "application/json"
+            }]
+        },
+        "goTo": {
+            "input": {
+                "type": "object",
+                "properties": {
+                    "x": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 180
+                    },
+                    "y": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 90
+                    },
+                    "z": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 20
+                    }
+                },
+                "required": ["x","y","z"]
+            },
+            "forms": [{
+                "href": "http://example.org/robot1/goTo",
+                "contentType": "application/json"
+            }]
+        },
+        "rotate": {
+            "input" : {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 360
+            },
+            "output": {
+                "type": "object",
+                "properties":{
+                    "x": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 180
+                    },
+                    "y": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 90
+                    },
+                    "z": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 20
+                    }
+                },
+                "required": ["x","y","z"]
+            },
+            "forms": [{
+                "href": "http://example.org/robot1/rotate",
+                "contentType": "application/json"
+            }]
+        }
+    },
+    "events": {
+        "emergencyButton":{
+            "forms": [{
+                "href": "http://example.org/robot1/limitHit",
+                "contentType": "application/json"
+            }]
+        },
+        "limitHit":{
+            "subscription":{
+                
+            },
+            "data":{
+                "type": "object",
+                "properties":{
+                    "axis":{
+                        "type":"string",
+                        "enum":["x","y","z"]
+                    },
+                    "direction":{
+                        "type":"string",
+                        "enum":["positive", "negative"]
+                    }
+                },
+                "anyOf": [
+                    {
+                      "if": {
+                        "properties": { "axis": { "const": "x" } }
+                      },
+                      "then": {
+                        "properties": { "direction": { "enum": ["positive","negative"] } }
+                      }
+                    },
+                    {
+                      "if": {
+                        "properties": { "axis": { "const": "y" } }
+                      },
+                      "then": {
+                        "properties": { "direction": { "enum": ["positive","negative"] } }
+                      }
+                    },
+                    {
+                      "if": {
+                        "properties": { "axis": { "const": "z" } }
+                      },
+                      "then": {
+                        "properties": { "direction": "positive" }
+                      }
+                    }
+                ]
+            },
+            "forms": [{
+                "href": "http://example.org/robot1/limitHit",
+                "contentType": "application/json"
+            }]
+        }
+    },
+    "securityDefinitions": { 
+        "bearer_sc": { 
+            "scheme": "nosec", 
+            "in": "header"
+            }},
+    "security": "bearer_sc"
+}
