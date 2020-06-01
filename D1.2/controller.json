@@ -1,0 +1,47 @@
+{
+    "@context": ["https://www.w3.org/2019/wot/td/v1"], 
+    "title": "Controller",
+    "description" : "Controller that uses two robots as part of a production chain",
+    "base": "http://example.org/controller",
+    "actions": {
+        "startSystem":{
+            "safe": false,
+            "idempotent": false,
+            "forms":[
+                {
+                    "href": "properties/startSystem",
+                    "contentType": "application/json",
+                    "op": ["invokeaction"]
+                }
+            ]
+        },
+        "stopSystem":{
+            "safe": false,
+            "idempotent": false,
+            "forms":[
+                {
+                    "href": "properties/stopSystem",
+                    "contentType": "application/json",
+                    "op": ["invokeaction"]
+                }
+            ]
+        },
+        "action1":{
+            "safe": false,
+            "idempotent": false,
+            "forms": [{
+                "href": "actions/action1",
+                "contentType": "application/json",
+                "op": ["invokeaction"]
+            }]
+            
+        }
+    },
+    "securityDefinitions": { 
+        "basic_sc": {
+            "scheme": "basic",
+            "in": "header" 
+        }
+    },
+    "security": "basic_sc"
+}
