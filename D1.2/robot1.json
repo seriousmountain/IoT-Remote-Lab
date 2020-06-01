@@ -6,6 +6,9 @@
     "properties": {
         "location": {
             "type": "object",
+            "readOnly": true,
+            "writeOnly": false,
+            "observable": true,
             "properties":{
                 "x": {
                     "type": "number",
@@ -25,36 +28,59 @@
             },
             "required": ["x","y","z"],
             "forms": [{
-                "href": "http://example.org/robot1/location",
+                "href": "properties/location",
                 "subprotocol": "longpoll",
-                "op": "readproperty",
+                "op": ["readproperty"],
+                "contentType": "application/json"
+            },
+            {
+                "href": "properties/locationlongpoll",
+                "subprotocol": "longpoll",
+                "op": ["observeproperty"],
                 "contentType": "application/json"
             }]
         },   
         "state": {
             "type": "string",
-            "readOnly": true,
-            "writeOnly": true,
+            "readOnly": false,
+            "writeOnly": false,
             "enum": ["enabled", "disabled"],
             "forms": [{
-                "href": "http://example.org/robot1/state"
+                "href": "properties/state",
+                "contentType": "application/json",
+                "op": [
+                    "readproperty",
+                    "writeproperty"
+                ]
             }]
         },
         "updateFrequency":{
             "type": "number",
-            "readOnly": true,
-            "writeOnly": true,
             "unit": "Hertz",
             "enum":[1,10,100],
             "forms": [{
-                "href": "http://example.org/robot1/updateFrequency"
+                "href": "properties/updateFrequency",
+                "contentType": "application/json",
+                "op": [
+                    "readproperty",
+                    "writeproperty"
+                ]
             }]
         }
     },
+    "forms": [{
+        "op": "readallproperties",
+        "href": "https://mylamp.example.com/allproperties",
+        "contentType": "application/json",
+        "htv:methodName": "GET"
+    }],
     "actions": {
         "goHome": {
+            "safe": false,
+            "idempotent": false,
             "forms": [{
-                "href": "http://example.org/robot1/goHome",
+                "href": "actions/goHome",
+                "op": "invokeaction",
                 "contentType": "application/json"
             }]
         },
@@ -80,8 +106,11 @@
                 },
                 "required": ["x","y","z"]
             },
+            "safe": false,
+            "idempotent": false,
             "forms": [{
-                "href": "http://example.org/robot1/goTo",
+                "href": "actions/goTo",
+                "op": "invokeaction",
                 "contentType": "application/json"
             }]
         },
@@ -112,8 +141,11 @@
                 },
                 "required": ["x","y","z"]
             },
+            "safe": false,
+            "idempotent": false,
             "forms": [{
-                "href": "http://example.org/robot1/rotate",
+                "href": "actions/rotate",
+                "op": "invokeaction",
                 "contentType": "application/json"
             }]
         }
@@ -121,7 +153,8 @@
     "events": {
         "emergencyButton":{
             "forms": [{
-                "href": "http://example.org/robot1/limitHit",
+                "op": "unsubscribeevent",
+                "href": "events/emergencyButton",
                 "contentType": "application/json"
             }]
         },
@@ -169,7 +202,8 @@
                 ]
             },
             "forms": [{
-                "href": "http://example.org/robot1/limitHit",
+                "href": "events/limitHit/subscribe",
+                "op": "subscribeevent",
                 "contentType": "application/json"
             }]
         }
