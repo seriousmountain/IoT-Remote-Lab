@@ -70,7 +70,7 @@
     },
     "forms": [{
         "op": "readallproperties",
-        "href": "https://mylamp.example.com/allproperties",
+        "href": "/allproperties",
         "contentType": "application/json",
         "htv:methodName": "GET"
     }],
