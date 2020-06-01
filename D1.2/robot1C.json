@@ -1,15 +1,14 @@
 {
-    "@context": [
-        "https://www.w3.org/2019/wot/td/v1",
-        {
-            "cov": "coaps://192.168.0.101:5683/robot1"
-        }], 
+    "@context": ["https://www.w3.org/2019/wot/td/v1"], 
     "title": "Robot1",
     "description" : "Robot with an endeffector to grab objects",
     "base": "http://example.org/robot1",
     "properties": {
         "location": {
             "type": "object",
+            "readOnly": true,
+            "writeOnly": false,
+            "observable": true,
             "properties":{
                 "x": {
                     "type": "number",
@@ -29,37 +28,96 @@
             },
             "required": ["x","y","z"],
             "forms": [{
-                "href": "http://example.org/robot1/location",
-                "subprotocol": "longpoll",
-                "op": "readproperty",
+                "href": "properties/location",
+                "op": ["readproperty"],
                 "contentType": "application/json"
+            },
+            {
+                "href": "properties/locationlongpoll",
+                "subprotocol": "longpoll",
+                "op": ["observeproperty"],
+                "contentType": "application/json"
+            },
+            {
+                "href": "coaps://192.168.0.101:5683/robot1/properties/location",
+                "contentType": "application/cbor",
+                "op": ["readproperty"]
+            },
+            {
+                "href": "coaps://192.168.0.101:5683/robot1/properties/locationlongpoll",
+                "contentType": "application/cbor",
+                "subprotocol": "longpoll",
+                "op": ["observeproperty"]
             }]
         },   
         "state": {
             "type": "string",
-            "readOnly": true,
-            "writeOnly": true,
+            "readOnly": false,
+            "writeOnly": false,
             "enum": ["enabled", "disabled"],
             "forms": [{
-                "href": "http://example.org/robot1/state"
+                "href": "properties/state",
+                "contentType": "application/json",
+                "op": [
+                    "readproperty",
+                    "writeproperty"
+                ]
+            },
+            {
+                "href": "coaps://192.168.0.101:5683/robot1/properties/state",
+                "contentType": "application/cbor",
+                "op": [
+                    "readproperty",
+                    "writeproperty"
+                ]
             }]
         },
         "updateFrequency":{
             "type": "number",
-            "readOnly": true,
-            "writeOnly": true,
             "unit": "Hertz",
             "enum":[1,10,100],
             "forms": [{
-                "href": "http://example.org/robot1/updateFrequency"
+                "href": "properties/updateFrequency",
+                "contentType": "application/json",
+                "op": [
+                    "readproperty",
+                    "writeproperty"
+                ]
+            },
+            {
+                "href": "coaps://192.168.0.101:5683/robot1/properties/updateFrequency",
+                "contentType": "application/cbor",
+                "op": [
+                    "readproperty",
+                    "writeproperty"
+                ]
             }]
         }
     },
+    "forms": [{
+        "op": "readallproperties",
+        "href": "/allproperties",
+        "contentType": "application/json",
+        "htv:methodName": "GET"
+    },
+    {
+        "href": "coaps://192.168.0.101:5683/robot1/allproperties",
+        "contentType": "application/cbor",
+        "op": "readallproperties"
+    }],
     "actions": {
         "goHome": {
+            "safe": false,
+            "idempotent": false,
             "forms": [{
-                "href": "http://example.org/robot1/goHome",
+                "href": "actions/goHome",
+                "op": "invokeaction",
                 "contentType": "application/json"
+            },
+            {
+                "href": "coaps://192.168.0.101:5683/robot1/actions/goHome",
+                "contentType": "application/cbor",
+                "op": "invokeaction"
             }]
         },
         "goTo": {
@@ -84,9 +142,17 @@
                 },
                 "required": ["x","y","z"]
             },
+            "safe": false,
+            "idempotent": false,
             "forms": [{
-                "href": "http://example.org/robot1/goTo",
+                "href": "actions/goTo",
+                "op": "invokeaction",
                 "contentType": "application/json"
+            },
+            {
+                "href": "coaps://192.168.0.101:5683/robot1/actions/goTo",
+                "contentType": "application/cbor",
+                "op": "invokeaction"
             }]
         },
         "rotate": {
@@ -116,17 +182,31 @@
                 },
                 "required": ["x","y","z"]
             },
+            "safe": false,
+            "idempotent": false,
             "forms": [{
-                "href": "http://example.org/robot1/rotate",
+                "href": "actions/rotate",
+                "op": "invokeaction",
                 "contentType": "application/json"
+            },
+            {
+                "href": "coaps://192.168.0.101:5683/robot1/actions/rotate",
+                "contentType": "application/cbor",
+                "op": "invokeaction"
             }]
         }
     },
     "events": {
         "emergencyButton":{
             "forms": [{
-                "href": "http://example.org/robot1/limitHit",
+                "op": "unsubscribeevent",
+                "href": "events/emergencyButton",
                 "contentType": "application/json"
+            },
+            {
+                "href": "coaps://192.168.0.101:5683/robot1/events/emergencyButton",
+                "contentType": "application/cbor",
+                "op": "unsubscribeevent"
             }]
         },
         "limitHit":{
@@ -173,15 +253,23 @@
                 ]
             },
             "forms": [{
-                "href": "http://example.org/robot1/limitHit",
+                "href": "events/limitHit/subscribe",
+                "op": "subscribeevent",
                 "contentType": "application/json"
+            },
+            {
+                "href": "coaps://192.168.0.101:5683/robot1/events/limitHit/subscribe",
+                "contentType": "application/cbor",
+                "op": "subscribeevent"
             }]
         }
     },
-    "securityDefinitions": { 
-        "bearer_sc": { 
-            "scheme": "nosec", 
-            "in": "header"
-            }},
+    "securityDefinitions": { "bearer_sc": { 
+        "scheme": "bearer",
+        "in": "header",
+        "alg": "ES256",
+        "format": "jwt" 
+        }
+    },
     "security": "bearer_sc"
 }
