@@ -1,0 +1,1 @@
+curl -u "hello":"world" http://example.com
