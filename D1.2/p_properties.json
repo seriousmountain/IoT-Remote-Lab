@@ -11,6 +11,7 @@
         "currentSpeed": {
             "type": "number",
             "readOnly" : true,
+            "observable": true,
             "minimum": 0,
             "maximum": 120,
             "unit": "km/h"
