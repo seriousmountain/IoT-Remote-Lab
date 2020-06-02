@@ -1,0 +1,11 @@
+{
+    "links": [
+        {
+            "href": "http://example.com/moreInformationToThisTD"
+        },
+        {
+            "href": "http://example.com/p_links.json",
+            "type": "application/td+json"
+            }
+        ]
+}
