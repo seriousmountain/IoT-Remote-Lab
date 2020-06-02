@@ -1,11 +1,13 @@
 {
     "links": [
         {
+            "rel": "about",
             "href": "http://example.com/moreInformationToThisTD"
         },
         {
+            "rel": "self",
             "href": "http://example.com/p_links.json",
             "type": "application/td+json"
-            }
+        }
         ]
 }

@@ -1,0 +1,22 @@
+[
+    {
+        "forms": [{
+            "href": "http://example.org/robot1/properties/state",
+            "contentType": "application/json",
+            "op": [
+                "readproperty",
+                "writeproperty"
+            ]
+        }]
+    },
+    {
+        "forms": [{
+            "href": "http://example.org/robot2/properties/state",
+            "contentType": "application/json",
+            "op": [
+                "readproperty",
+                "writeproperty"
+            ]
+        }]
+    }
+]

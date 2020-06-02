@@ -1,0 +1,16 @@
+[
+    {
+        "forms": [{
+            "href": "http://example.org/robot1/actions/goHome",
+            "op": "invokeaction",
+            "contentType": "application/json"
+        }]
+    },
+    {
+        "forms": [{
+            "href": "http://example.org/robot2/actions/goTo",
+            "op": "invokeaction",
+            "contentType": "application/json"
+        }]
+    }
+]
